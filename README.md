@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Speech to Text Frontend Application
+
+## A frontend application built using NextJS v14.2.16 to interface with the [Backend application](https://github.com/Dannyyapyap/stt)
+
+## Pre-requiste
+
+Tested on
+
+Ensure that you have node and npm installed
+
+- node v18.19.1
+- npm 9.2.0
 
 ## Getting Started
 
-First, run the development server:
+### Running Locally
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+There are two method for setting up the project locally: using the provided setup script (setup_env.sh) or setting it up manually
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Method 1: Setup with the provided script
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1.  From the root project directory, run the setup script to automate the environment setup:
 
-## Learn More
+    ```bash
+    bash setup_env.sh
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+    Note: if your backend application is hosted on another port, do make the necessary change in .env.local
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Method 2: Setup Manually
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1.  Install dependencies:
 
-## Deploy on Vercel
+    ```bash
+    npm install
+    npx shadcn@latest add accordion
+    npx shadcn@latest add button
+    npx shadcn@latest add input
+    npx shadcn@latest add pagination
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2.  Configure environment variables
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    create /frontend-ui-stt/.env.local
+
+    ```bash
+    NEXT_PUBLIC_API_ENDPOINT=http://localhost:8020
+    ```
+
+    Note: This is the endpoint which is hosting your backend application, the backend application has to be running, please refer to
+    [stt](https://github.com/Dannyyapyap/stt)
+
+### Run the development server:
+
+    ```bash
+    npm run dev
+    # or
+    yarn dev
+    # or
+    pnpm dev
+    # or
+    bun dev
+    ```
+
+4.  Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
