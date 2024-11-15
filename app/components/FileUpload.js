@@ -5,7 +5,7 @@ import { Upload } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { uploadAudio } from "../api/upload";
-import styles from "./index.css";
+import "./index.css";
 
 export default function FileUpload() {
   const [selectedFiles, setSelectedFiles] = useState(null);
@@ -65,7 +65,7 @@ export default function FileUpload() {
         {Object.entries(uploadResults).map(
           ([status, count]) =>
             count > 0 && (
-              <p key={status} className={styles.message}>
+              <p key={status}>
                 {count} audio file(s){" "}
                 {statusMessages[status] || "with unknown status"}.
               </p>
