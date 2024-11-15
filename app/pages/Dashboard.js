@@ -1,6 +1,7 @@
 import "./index.css";
 import FileUpload from "../components/FileUpload";
 import SearchRecord from "../components/SearchRecord";
+import RecordList from "../components/RecordList";
 
 export default function Dashboard() {
   return (
@@ -8,6 +9,7 @@ export default function Dashboard() {
       <div className="components-container">
         <FileUpload />
         <SearchRecord />
+        <RecordList />
       </div>
     </div>
   );

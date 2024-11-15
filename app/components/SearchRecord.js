@@ -5,14 +5,23 @@ import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { searchDatabase } from "../api/search";
+import { CustomPagination } from "./CustomPagination";
 import "./index.css";
+
+/**
+ * Keyword search for audio file name and transcription content
+ * - Filters records by filename/transcription keyword matches
+ * - Paginates results (1 per page)
+ * - Shows "No Results found for your search" when no matches
+ */
 
 export default function SearchRecord() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
-  const [originalData, setOriginalData] = useState([]); // State to store the original data
+  const [currentPage, setCurrentPage] = useState(1);
+  const resultsPerPage = 1; // View only 1 result per page
 
   async function submitQuery() {
     if (!searchQuery) return;
@@ -24,7 +33,7 @@ export default function SearchRecord() {
       if (result && result.record > 0) {
         const uniqueResults = getUniqueResults(result.data); // Send it to getUniqueResults to remove duplicated record.
         setSearchResults(uniqueResults); // Only set the unique results
-        setOriginalData(result.data); // Store the full original data for reference
+        setCurrentPage(1); // Reset to first page on new search
       } else {
         setSearchResults([]); // No records found, set empty array
         console.log("No records found.");
@@ -57,6 +66,17 @@ export default function SearchRecord() {
     return uniqueResults;
   }
 
+  // Custom Pagination calculations
+  const indexOfLastResult = currentPage * resultsPerPage;
+  const indexOfFirstResult = indexOfLastResult - resultsPerPage;
+  const currentResults = searchResults?.slice(
+    indexOfFirstResult,
+    indexOfLastResult
+  );
+  const totalPages = searchResults
+    ? Math.ceil(searchResults.length / resultsPerPage)
+    : 0;
+
   return (
     <div className="section">
       <div className="section-header">
@@ -87,7 +107,7 @@ export default function SearchRecord() {
           <div>
             <strong>Search Result(s):</strong>
             <ul className="search-result-list">
-              {searchResults.map((item) => (
+              {currentResults.map((item) => (
                 <li key={item.id}>
                   {item.transcription}
                   <br />
@@ -100,6 +120,11 @@ export default function SearchRecord() {
                 </li>
               ))}
             </ul>
+            <CustomPagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+            />
           </div>
         ) : searchResults && searchResults.length === 0 ? (
           <div>No results found for your search.</div>

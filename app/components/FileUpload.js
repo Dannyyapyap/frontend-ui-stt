@@ -7,6 +7,14 @@ import { Button } from "@/components/ui/button";
 import { uploadAudio } from "../api/upload";
 import "./index.css";
 
+/**
+ * Audio file upload and transcription handler
+ * - Supports single/multi file uploads
+ * - Tracks transcription status via status counter
+ * - send 'insertedRecord' event on successful transcription
+ * - Event triggers UI refresh in RecordList.js
+ */
+
 export default function FileUpload() {
   const [selectedFiles, setSelectedFiles] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -38,6 +46,7 @@ export default function FileUpload() {
 
       await Promise.all(uploadPromises); // This is to allow concurrent upload of multiple files. Requests will be concurrent instead of sequential
       setUploadResults(results);
+      window.dispatchEvent(new Event("insertedRecord")); // Send event to trigger reloading of the Stored Transcript record
     } catch (error) {
       console.error("Upload failed:", error);
     } finally {
@@ -67,7 +76,7 @@ export default function FileUpload() {
             count > 0 && (
               <p key={status}>
                 {count} audio file(s){" "}
-                {statusMessages[status] || "with unknown status"}.
+                {statusMessages[status] || "Unknown status"}.
               </p>
             )
         )}
