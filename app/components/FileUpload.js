@@ -37,7 +37,7 @@ export default function FileUpload() {
 
       const uploadPromises = files.map(async (file) => {
         try {
-          const response = await uploadAudio(file);
+          await uploadAudio(file);
           results[200] = (results[200] || 0) + 1; // When request comes back with status 200, add 1 to the count
         } catch (error) {
           results[500] = (results[500] || 0) + 1; // When request comes back with status 500, add 1 to the count
@@ -51,7 +51,7 @@ export default function FileUpload() {
       console.error("Upload failed:", error);
     } finally {
       // Clear file upload memory and reset the file input field after all requests have been fulfilled
-      setSelectedFiles(null); // Clear file upload memory
+      setSelectedFiles(null);
       const fileInput = document.querySelector('input[type="file"]');
       if (fileInput) fileInput.value = ""; // Reset the file input field
 

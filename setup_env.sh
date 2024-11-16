@@ -3,11 +3,11 @@
 # Install npm dependencies
 npm install
 
-# Install shadcn components
-components=("accordion" "button" "input" "pagination")
-for component in "${components[@]}"; do
-    npx shadcn@latest add "$component" --yes
-done
+# Install shadcn components only uncomment if there are errors showing missing packages from shadcn
+# components=("accordion" "button" "input" "pagination")
+# for component in "${components[@]}"; do
+#     npx shadcn@latest add "$component" --yes
+# done
 
 # Create .env.local in current directory
 cat > .env.local << EOL
