@@ -97,6 +97,7 @@ export default function FileUpload() {
           multiple
           onChange={handleFileSelect}
           className="section-action"
+          data-testid="file-upload"
         />
 
         {renderStatusMessages()}
